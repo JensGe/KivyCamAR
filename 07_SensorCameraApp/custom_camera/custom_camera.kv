@@ -1,0 +1,127 @@
+#:import compass_facade plyer.compass
+#:import gyroscope_facade plyer.gyroscope
+
+<CameraWidget>:
+    size_hint: (1, 0.9)
+    CustomCamera:
+        size_hint: (1, .4)
+        id: camera
+    BoxLayout:
+        id: cam_buttons_1
+        orientation: 'horizontal'
+        size_hint: (1, .1)
+        CompassInterface:
+            size_hint_x: 1
+            id: compass_interface
+        GravityInterface:
+            size_hint_x: 1
+            id: grav_interface
+        AccelerometerInterface:
+            size_hint_x: 1
+            id: acc_interface
+        GyroscopeInterface:
+            size_hint_x: 1
+            id: gyro_interface
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: (1, .05)
+        ToggleButton:
+            id: cam_play
+            text: "Camera"
+            state: 'down'
+            on_press: camera.play = not camera.play
+            pos: (0, root.height - self.height)
+        ToggleButton:
+            id: gravity_horizon_btn
+            text: 'Horizon'
+            background_color: (0,255,0,255) if camera.gravity_horizon else (1,1,1,1)
+            on_press: camera.gravity_horizon = not camera.gravity_horizon
+            pos: (0, root.height - self.height)
+        ToggleButton:
+            id: compass_sun_btn
+            text: 'Compass\nNeedle'
+            background_color: (255,200,0,255) if camera.compass_sun else (1,1,1,1)
+            on_press: camera.compass_sun = not camera.compass_sun
+            pos: (0, root.height - self.height)
+        ToggleButton:
+            id: gyroscope_sun_btn
+            text: 'Gyroscope\nNeedle'
+            background_color: (200,255,0,255) if camera.gyroscope_sun else (1,1,1,1)
+            on_press: camera.gyroscope_sun = not camera.gyroscope_sun
+            pos: (0, root.height - self.height)
+    BoxLayout:
+        id: cam_buttons_2
+        orientation: 'horizontal'
+        size_hint: (1, .05)
+        Button:
+            id: rotate
+            text: str(camera.angle)
+            on_press: camera.angle += 90
+            pos: (0, root.height - self.height)
+        ToggleButton:
+            id: bw_btn
+            text: 'B/W'
+            on_press: camera.bw = not camera.bw
+            pos: (0, root.height - self.height)
+        ToggleButton:
+            id: invert_btn
+            text: 'Invert'
+            on_press: camera.invert = not camera.invert
+            pos: (0, root.height - self.height)
+        ToggleButton:
+            id: edge_btn
+            text: 'Edges'
+            on_press: camera.edge = not camera.edge
+            pos: (0, root.height - self.height)
+
+<CustomCamera>:
+    resolution: (1280, 960)
+    play: True
+    index: 0
+    keep_ratio: True
+    allow_stretch: True
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: 0, 0, 1
+            origin: root.center
+    canvas.after:
+        PopMatrix
+
+<GravityInterface>:
+    ToggleButton:
+        id: toggle_grav_btn
+        text: 'Gravity'
+        halign: 'left'
+        padding: (15, 15)
+        on_press:
+            root.do_toggle()
+
+<AccelerometerInterface>:
+    ToggleButton:
+        id: toggle_acc_btn
+        text: 'Accelero-\nmeter'
+        halign: 'left'
+        padding: (15, 15)
+        on_press:
+            root.do_toggle()
+
+<CompassInterface>:
+    facade: compass_facade
+    ToggleButton:
+        id: compass_toggle_btn
+        text: 'Compass'
+        halign: 'left'
+        padding: (15, 15)
+        on_press: root.toggle_compass()
+
+
+<GyroscopeInterface>:
+    facade: gyroscope_facade
+    ToggleButton:
+        id: gyroscope_toggle_btn
+        text: 'Gyroscope'
+        halign: 'left'
+        padding: (15, 15)
+        on_press: root.toggle_gyroscope()

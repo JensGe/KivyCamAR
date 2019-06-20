@@ -1,0 +1,46 @@
+# -*- coding: utf-8 -*-
+
+<ScatterTextWidget>:
+    orientation: 'vertical'
+    TextInput:
+        id: my_textinput
+        font_size: 150
+        size_hint_y: None
+        height: 200
+        text: 'default'
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: 100
+        Label:
+            id: label1
+            text: my_textinput.text[:3]
+            font_size: 50
+        Button:
+            id: toast_button
+            text: 'Toast'
+            size_hint: 1, None
+            on_release: root.do_notify(text=my_textinput.text)
+    FloatLayout:
+        Scatter:
+            center: self.parent.center
+            size_hint: None, None
+            size: my_label.size
+            canvas.after:
+                Color:
+                    rgba: 1, 0, 0, 0.5
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            Label:
+                id: my_label
+                text: my_textinput.text
+                font_size: 150
+                size: self.texture_size
+                canvas:
+                    Color:
+                        rgba: 0, 1, 0, 0.5
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+

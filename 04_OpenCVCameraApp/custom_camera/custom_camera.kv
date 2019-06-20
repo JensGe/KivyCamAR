@@ -1,0 +1,48 @@
+<CustomCamera>:
+    resolution: (1280, 960)
+    play: True
+    index: 0
+    keep_ratio: True
+    allow_stretch: True
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: 0, 0, 1
+            origin: root.center
+    canvas.after:
+        PopMatrix
+
+<CameraWidget>:
+    CustomCamera:
+        id: camera
+    BoxLayout:
+        id: buttons
+        orientation: 'horizontal'
+        size_hint: (1, .1)
+        ToggleButton:
+            id: cam_play
+            text: "Camera"
+            state: 'down'
+            on_press: camera.play = not camera.play
+            pos: (0, root.height - self.height)
+        Button:
+            id: rotate
+            text: str(camera.angle)
+            on_press: camera.angle += 90
+            pos: (0, root.height - self.height)
+        ToggleButton:
+            id: bw_btn
+            text: 'Grayscale'
+            on_press: camera.bw = not camera.bw
+            pos: (0, root.height - self.height)
+        ToggleButton:
+            id: invert_btn
+            text: 'Invert'
+            on_press: camera.invert = not camera.invert
+            pos: (0, root.height - self.height)
+        ToggleButton:
+            id: edge_btn
+            text: 'Edges'
+            on_press: camera.edge = not camera.edge
+            pos: (0, root.height - self.height)
