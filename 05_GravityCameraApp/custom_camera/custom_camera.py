@@ -51,7 +51,7 @@ class CustomCamera(Camera):
             horizon_start = (int(height/2-z*128-x*64), 0)
             horizon_end = (int(height/2-z*128+x*64), width)
 
-            cv2.line(image, horizon_start, horizon_end, (255, 255, 255), 3)
+            cv2.line(image, horizon_start, horizon_end, (0, 255, 0), 3)
 
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGBA)
 
