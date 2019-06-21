@@ -72,7 +72,7 @@ class CustomCamera(Camera):
 
             x, y, z = self.get_grav()
 
-            compass_sun_x = compass_angle_xz_avg * width * 39.334 / 360
+            compass_sun_x = (compass_angle_xz_avg * width * 39.334 / 360) - 180
             compass_sun_y = height / 2 - z * 128
 
             compass_sun_point = (int(compass_sun_y), int(compass_sun_x))
