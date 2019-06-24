@@ -1,0 +1,34 @@
+<CustomCamera>:
+    resolution: (640,480)
+    play: True
+    keep_ratio: True
+    allow_stretch: True
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: 0, 0, 1
+            origin: root.center
+    canvas.after:
+        PopMatrix
+
+
+<CameraWidget>:
+    CustomCamera:
+        id: camera
+    BoxLayout:
+        id: buttons
+        orientation: 'horizontal'
+        size_hint: (1,.1)
+        Button:
+            id: detect_face
+            text: "[color=000000]Detect Faces[/color]"
+            markup:True
+            background_normal: ''
+            background_color: (0,255,0,255) if camera.detectFaces else (255,0,0,255)
+            on_press: camera.detectFaces = not camera.detectFaces
+            pos: (0,root.height - self.height)
+    Label:
+        id: info
+        size_hint: (1,.1)
+        text: str(camera.index)
