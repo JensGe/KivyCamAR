@@ -18,7 +18,7 @@ Builder.load_string('''
     Camera:
         id: camera
         resolution: (1280, 960)
-        play: True
+        play: False
         keep_ratio: True
         allow_stretch: True
         canvas.before:  

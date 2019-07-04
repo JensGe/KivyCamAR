@@ -7,10 +7,12 @@ import kivy
 import numpy as np
 import cv2
 
+from android.permissions import request_permission, Permission, check_permission
 
 class CustomCamera(Camera):
     detectFaces = BooleanProperty(False)
     angle = NumericProperty(0)
+
     def __init__(self, **kwargs):
         super(CustomCamera, self).__init__(**kwargs)
 
@@ -43,6 +45,12 @@ class CustomCamera(Camera):
         if self.isAndroid:
             cameras = self._camera.get_camera_count()
         return cameras
+
+    def toggle_camera(self):
+        if not check_permission(Permission.CAMERA):
+            request_permission(Permission.CAMERA)
+        else:
+            self.play = not self.play
 
 
 class CameraWidget(BoxLayout):

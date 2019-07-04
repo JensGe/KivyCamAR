@@ -28,6 +28,10 @@
             background_color: (0,255,0,255) if camera.detectFaces else (255,0,0,255)
             on_press: camera.detectFaces = not camera.detectFaces
             pos: (0,root.height - self.height)
+        Button:
+            id: toggle_camera
+            text: "Toggle Camera"
+            on_release: camera.toggle_camera()
     Label:
         id: info
         size_hint: (1,.1)
